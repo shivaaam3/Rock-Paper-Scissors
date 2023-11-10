@@ -1,3 +1,18 @@
+const computerSelectedOption = document.querySelector("#computer > .selectedOption");
+const playerSelectedOption = document.querySelector("#player > .selectedOption");
+
+const playerScoreText = document.querySelector("#player > .score");
+const computerScoreText = document.querySelector("#computer > .score");
+
+const resultText = document.querySelector(".result > h3");
+const optionButtons = document.querySelectorAll("#player > .options > button");
+optionButtons.forEach((button) => {
+    button.addEventListener("click", (e) => {
+        playRound(button.id);
+        // alert(button.id);
+    });
+});
+
 const Options = {
     Rock: 0,
     Paper: 1,
@@ -15,26 +30,30 @@ Options.properties = {
 let playerScore = 0;
 let computerScore = 0;
 
-function getUserInput() {
-    let input = prompt("Please type an option from Rock/ Papers/ Scissors");
-    input = input.toLowerCase();
-
-    switch (input) {
-        case "rock":
+function getUserInput(id) {
+    switch (id) {
+        case "0":
+            playerSelectedOption.src = "./Images/Rock.png";
             return Options.Rock;
-        case "paper":
+        case "1":
+            playerSelectedOption.src = "./Images/Paper.png";
             return Options.Paper;
-        case "scissors":
+        case "2":
+            playerSelectedOption.src = "./Images/Scissors.png";
             return Options.Scissors;
         default:
-            alert("Incorrect input please try again!")
             return Options.NotAnOption;
     }
 }
 
+
+function updateResultText(str) {
+    resultText.textContent = str;
+}
+
 function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
+    min = Math.trunc(min);
+    max = Math.trunc(max);
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
@@ -42,10 +61,13 @@ function getComputerInput() {
     const rand = getRandomInt(0, 3);
     switch (rand) {
         case 0:
+            computerSelectedOption.src = "./Images/Rock.png";
             return Options.Rock;
         case 1:
+            computerSelectedOption.src = "./Images/Paper.png";
             return Options.Paper;
         case 2:
+            computerSelectedOption.src = "./Images/Scissors.png";
             return Options.Scissors;
         default:
             return Options.NotAnOption;
@@ -55,69 +77,61 @@ function getComputerInput() {
 function onRoundWon(winner) {
     if (winner == "computer") {
         computerScore++;
+        computerScoreText.textContent = `Computer: ${computerScore}`;
+        updateResultText("Computer won this round!");
     } else {
         playerScore++;
+        playerScoreText.textContent = `Player: ${playerScore}`;
+        updateResultText("Player won this round!");
     }
-    alert(`${winner} Won this round! \nPlayer Score: ${playerScore} \nComputer Score: ${computerScore}`);
 }
 
 
 function endGameCheck() {
     if (computerScore >= 5) {
-        alert("Game Over! Computer Won the game!");
+        updateResultText("Computer won the game!");
         return true;
     } else if (playerScore >= 5) {
-        alert("Game Over! Player Won the game!");
+        updateResultText("Player won the game!");
         return true;
     } else
         return false;
 }
 
 
-function game() {
-    while (true) {
-        const computerOption = getComputerInput();
-        const playerOption = getUserInput();
+function playRound(id) {
 
-        if (playerOption == Options.NotAnOption) {
-            alert("Incorrect input please try again!");
-            continue;
-        }
-
-        alert(`Player chose: ${Options.properties[playerOption]} \nComputer chose: ${Options.properties[computerOption]}`);
-        if (playerOption == computerOption) {
-            alert("It is a Draw!")
-            continue;
-        }
-
-        switch (playerOption) {
-            case Options.Rock:
-                if (computerOption == Options.Paper)
-                    onRoundWon("computer");
-                else if (computerOption == Options.Scissors)
-                    onRoundWon("player");
-                break;
-            case Options.Paper:
-                if (computerOption == Options.Rock)
-                    onRoundWon("player");
-                else if (computerOption == Options.Scissors)
-                    onRoundWon("computer");
-                break;
-            case Options.Scissors:
-                if (computerOption == Options.Paper)
-                    onRoundWon("player");
-                else if (computerOption == Options.Rock)
-                    onRoundWon("computer");
-                break;
-        }
-
-        if (endGameCheck())
-            break;
-
+    const playerOption = getUserInput(id)
+    const computerOption = getComputerInput();
+    if (playerOption == computerOption) {
+        updateResultText("It is a Draw!");
     }
 
+    switch (playerOption) {
+        case Options.Rock:
+            if (computerOption == Options.Paper)
+                onRoundWon("computer");
+            else if (computerOption == Options.Scissors)
+                onRoundWon("player");
+            break;
+        case Options.Paper:
+            if (computerOption == Options.Rock)
+                onRoundWon("player");
+            else if (computerOption == Options.Scissors)
+                onRoundWon("computer");
+            break;
+        case Options.Scissors:
+            if (computerOption == Options.Paper)
+                onRoundWon("player");
+            else if (computerOption == Options.Rock)
+                onRoundWon("computer");
+            break;
+    }
+
+    endGameCheck();
 }
 
 
-game();
+
+
 

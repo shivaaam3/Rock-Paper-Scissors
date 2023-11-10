@@ -5,11 +5,45 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>RPS</title>
-        <script src="./JS/rockPaperScissors.js"></script>
+        <link rel="stylesheet" href="style.css">
+        <script src="./JS/rockPaperScissors.js" defer></script>
     </head>
 
     <body>
-        This is a Rock Paper Scissors page!
+        <div class="title">
+            <h1>ROCK PAPER SCISSORS!</h1>
+        </div>
+        <div class="content">
+            <div class="playArea">
+                <div id="player">
+                    <h3>PLAYER</h3>
+                    <img class="selectedOption" src="" alt="?">
+                    <div class="options">
+                        <button id="0"><img src="./Images/Rock.png" alt="Rock"></button>
+                        <button id="1"><img src="./Images/Paper.png" alt="Paper"></button>
+                        <button id="2"><img src="./Images/Scissors.png" alt="Scissors"></button>
+                    </div>
+                    <h4 class="score">Score: 0</h4>
+                </div>
+                <div class="partition"></div>
+                <div id="computer">
+                    <h3>COMPUTER</h3>
+                    <img class="selectedOption" src="" alt="?">
+                    <div class="options">
+                        <button disabled><img src="./Images/Rock.png" alt=""></button>
+                        <button disabled><img src="./Images/Paper.png" alt=""></button>
+                        <button disabled><img src="./Images/Scissors.png" alt=""></button>
+                    </div>
+                    <h4 class="score">Score: 0</h4>
+                </div>
+            </div>
+            <div class="result">
+                <h3>Choose an option!</h3>
+            </div>
+        </div>
+        <div class="footer">
+            Copyright © Shivaaam3 2023
+        </div>
     </body>
 
 </html>
